@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">A</div>
+                <div>
+                    <h2>Attendance</h2>
+                    <p>Admin Panel</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <button class="menu-btn active" data-view="dashboard">Dashboard</button>
+                <button class="menu-btn" data-view="employees">Employees</button>
+                <button class="menu-btn" data-view="departments">Departments</button>
+                <button class="menu-btn" data-view="attendance">Attendance</button>
+                <button class="menu-btn" data-view="reports">Reports</button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="exportDailyBtn" class="secondary-btn">Export Daily Excel</button>
+                <button id="exportWeeklyBtn" class="secondary-btn">Export Weekly Excel</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="pageSubtitle">Manage attendance, departments, and reports.</p>
+                </div>
+                <div class="top-actions">
+                    <input type="text" id="globalSearch" placeholder="Search..." />
+                    <button id="mobileMenuBtn" class="icon-btn">☰</button>
+                </div>
+            </header>
+
+            <section id="view-dashboard" class="view active"></section>
+            <section id="view-employees" class="view"></section>
+            <section id="view-departments" class="view"></section>
+            <section id="view-attendance" class="view"></section>
+            <section id="view-reports" class="view"></section>
+        </main>
+    </div>
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="dialogs.js"></script>
+    <script src="data.js"></script>
+    <script src="calculations.js"></script>
+    <script src="reports.js"></script>
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+</body>
+
+
+</html>

@@ -1,0 +1,21 @@
+Employee ID,Employee Name,Department,Shift,Status
+E001,Aman Singh,General Labour,Morning,Active
+E002,Priya Patel,Packaging,Morning,Active
+E003,Rahul Verma,Forklift,Evening,Active
+E004,Sara Khan,Machine Operator,Night,Active
+E005,John Brown,General Labour,Morning,Active
+E006,Neha Sharma,Packaging,Evening,Active
+E007,Mike Chen,Forklift,Morning,Active
+E008,Ayesha Ali,Machine Operator,Morning,Active
+E009,David Wilson,General Labour,Night,Active
+E010,Fatima Noor,Packaging,Morning,Active
+E011,Arjun Mehta,Forklift,Evening,Active
+E012,Emily Clark,Machine Operator,Morning,Active
+E013,Nikhil Kumar,General Labour,Evening,Active
+E014,Hina Sheikh,Packaging,Night,Active
+E015,Robert Lee,Forklift,Morning,Active
+E016,Sonia Das,Machine Operator,Evening,Active
+E017,Bilal Ahmed,General Labour,Morning,Active
+E018,Laura Martin,Packaging,Morning,Active
+E019,Sandeep Gill,Forklift,Night,Active
+E020,Maya Roy,Machine Operator,Morning,Active
