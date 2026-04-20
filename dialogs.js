@@ -1,10 +1,6 @@
-/* ───────────────────────────────────────────────
-   Custom Dialog System
-   Replaces native alert / confirm / prompt
-   ─────────────────────────────────────────────── */
-
 const Dialog = (() => {
     let overlay = null;
+    let activeClose = false;
 
     const icons = {
         error: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
@@ -33,6 +29,21 @@ const Dialog = (() => {
         return overlay;
     }
 
+    function closeDialog(resolve, box, ov, value) {
+        if (activeClose) return;
+        activeClose = true;
+        box.classList.remove("active");
+        box.classList.add("closing");
+        ov.classList.add("closing");
+
+        setTimeout(() => {
+            ov.classList.remove("active", "closing");
+            ov.innerHTML = "";
+            activeClose = false;
+            resolve(value);
+        }, 200);
+    }
+
     function show(type, title, message, options = {}) {
         return new Promise(resolve => {
             const ov = ensureOverlay();
@@ -40,29 +51,28 @@ const Dialog = (() => {
             const isPrompt = type === "prompt";
             const isConfirm = type === "confirm";
 
-            const box = document.createElement("div");
-            box.className = "dialog-box";
-            box.innerHTML = `
-                <div class="dialog-icon-circle" style="background:${c.bg};border-color:${c.border}">
-                    <span class="dialog-icon" style="color:${c.icon}">${icons[type] || icons.info}</span>
-                </div>
-                <h3 class="dialog-title">${title}</h3>
-                <p class="dialog-message">${message}</p>
-                ${isPrompt ? `<input type="${options.inputType || "text"}" class="dialog-input" id="dialogInput" value="${options.defaultValue || ""}" placeholder="${options.placeholder || ""}" />` : ""}
-                <div class="dialog-actions">
-                    ${(isConfirm || isPrompt) ? `<button class="dialog-btn dialog-btn-cancel" id="dialogCancel">Cancel</button>` : ""}
-                    <button class="dialog-btn dialog-btn-ok" id="dialogOk" style="background:${c.btn}">${options.okText || "OK"}</button>
+            ov.innerHTML = `
+                <div class="dialog-box">
+                    <div class="dialog-icon-circle" style="background:${c.bg};border-color:${c.border}">
+                        <span class="dialog-icon" style="color:${c.icon}">${icons[type] || icons.info}</span>
+                    </div>
+                    <h3 class="dialog-title">${title}</h3>
+                    <p class="dialog-message">${message}</p>
+                    ${isPrompt ? `<input type="${options.inputType || "text"}" class="dialog-input" id="dialogInput" value="${options.defaultValue || ""}" placeholder="${options.placeholder || ""}" />` : ""}
+                    <div class="dialog-actions">
+                        ${(isConfirm || isPrompt) ? `<button class="dialog-btn dialog-btn-cancel" id="dialogCancel">Cancel</button>` : ""}
+                        <button class="dialog-btn dialog-btn-ok" id="dialogOk" style="background:${c.btn}">${options.okText || "OK"}</button>
+                    </div>
                 </div>
             `;
 
-            ov.innerHTML = "";
-            ov.appendChild(box);
+            const box = ov.querySelector(".dialog-box");
+            const input = ov.querySelector("#dialogInput");
+            const okBtn = ov.querySelector("#dialogOk");
+            const cancelBtn = ov.querySelector("#dialogCancel");
+
             ov.classList.add("active");
             box.classList.add("active");
-
-            const input = box.querySelector("#dialogInput");
-            const okBtn = box.querySelector("#dialogOk");
-            const cancelBtn = box.querySelector("#dialogCancel");
 
             if (input) {
                 input.focus();
@@ -71,46 +81,36 @@ const Dialog = (() => {
                 okBtn.focus();
             }
 
-            function close(value) {
-                box.classList.remove("active");
-                box.classList.add("closing");
-                ov.classList.add("closing");
-                setTimeout(() => {
-                    ov.classList.remove("active", "closing");
-                    box.remove();
-                }, 250);
-                resolve(value);
-            }
+            const doClose = value => closeDialog(resolve, box, ov, value);
 
-            okBtn.addEventListener("click", () => {
-                if (isPrompt) close(input.value);
-                else if (isConfirm) close(true);
-                else close(true);
-            });
+            okBtn.onclick = () => {
+                if (isPrompt) doClose(input.value);
+                else doClose(true);
+            };
 
             if (cancelBtn) {
-                cancelBtn.addEventListener("click", () => close(isPrompt ? null : false));
+                cancelBtn.onclick = () => doClose(isPrompt ? null : false);
             }
 
-            ov.addEventListener("click", e => {
+            ov.onclick = e => {
                 if (e.target === ov) {
-                    if (isPrompt) close(null);
-                    else if (isConfirm) close(false);
-                    else close(true);
+                    if (isPrompt) doClose(null);
+                    else if (isConfirm) doClose(false);
+                    else doClose(true);
                 }
-            });
+            };
 
-            box.addEventListener("keydown", e => {
+            box.onkeydown = e => {
                 if (e.key === "Escape") {
-                    if (isPrompt) close(null);
-                    else if (isConfirm) close(false);
-                    else close(true);
+                    if (isPrompt) doClose(null);
+                    else if (isConfirm) doClose(false);
+                    else doClose(true);
                 }
                 if (e.key === "Enter") {
-                    if (isPrompt) close(input.value);
-                    else close(isConfirm ? true : true);
+                    if (isPrompt) doClose(input.value);
+                    else doClose(true);
                 }
-            });
+            };
         });
     }
 

@@ -5,9 +5,10 @@
 
 /* ── Shift Definitions (minutes from midnight) ── */
 const SHIFTS = {
-    morning: { start: 480 },    // 08:00 – 16:00
-    evening: { start: 960 },    // 16:00 – 00:00
-    night:   { start: 0 }       // 00:00 – 08:00
+    morning:   { start: 480 },    // 08:00 – 16:00
+    afternoon: { start: 960 },    // 16:00 – 00:00
+    evening:   { start: 960 },    // 16:00 – 00:00 (alias)
+    night:     { start: 0 }       // 00:00 – 08:00
 };
 
 const SHIFT_DURATION = 480;     // every shift is 8 hours (480 min)
@@ -144,9 +145,9 @@ function calculatePay(empId, employeeDept, hours, deptData) {
     const rate   = Number(dept.hourly_rate);
     const otRate = Number(dept.overtime_rate);
 
-    /* Sum existing hours for this employee */
+    /* Sum existing hours for this employee, excluding the row currently being edited */
     const prevHours = AppData.attendance
-        .filter(r => r.emp_id === empId)
+        .filter(r => r.emp_id === empId && r.id !== window.editingAttendanceId)
         .reduce((sum, r) => sum + Number(r.hours || 0), 0);
 
     const totalAfterAdd  = prevHours + hours;

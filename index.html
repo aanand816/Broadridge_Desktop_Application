@@ -28,6 +28,8 @@
             </nav>
 
             <div class="sidebar-footer">
+                <button id="importEmployeesBtn" class="secondary-btn">Import Employees Excel</button>
+                <button id="exportEmployeesBtn" class="secondary-btn">Export Employees Excel</button>
                 <button id="exportDailyBtn" class="secondary-btn">Export Daily Excel</button>
                 <button id="exportWeeklyBtn" class="secondary-btn">Export Weekly Excel</button>
             </div>
@@ -40,7 +42,6 @@
                     <p id="pageSubtitle">Manage attendance, departments, and reports.</p>
                 </div>
                 <div class="top-actions">
-                    <input type="text" id="globalSearch" placeholder="Search..." />
                     <button id="mobileMenuBtn" class="icon-btn">☰</button>
                 </div>
             </header>
@@ -56,11 +57,11 @@
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <script src="dialogs.js"></script>
     <script src="data.js"></script>
+    <script src="storage.js"></script>
+    <script src="indexeddb.js"></script>
     <script src="calculations.js"></script>
     <script src="reports.js"></script>
-    <script src="storage.js"></script>
     <script src="app.js"></script>
 </body>
-
 
 </html>
