@@ -1,0 +1,30 @@
+{
+  "name": "-broadridgeattandanceapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "http-server . -p 1420 -c-1",
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build:ui": "rm -rf dist && mkdir -p dist && cp *.js *.html *.css *.csv dist/ && cp -r assets dist/",
+    "build": "tauri build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aanand816/Broadridge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/aanand816/Broadridge/issues"
+  },
+  "homepage": "https://github.com/aanand816/Broadridge#readme",
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.10.1",
+    "http-server": "^14.1.1"
+  }
+}

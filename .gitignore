@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+dist/
+
+# macOS
+.DS_Store
+
+# Environment Variables
+.env
+.env.local
+
+# Tauri & Rust
+src-tauri/target/
+src-tauri/gen/
