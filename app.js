@@ -919,3 +919,8 @@ window.deleteEmployee = deleteEmployee;
 window.startEditDepartment = startEditDepartment;
 window.deleteDepartment = deleteDepartment;
 window.cancelEditDepartment = cancelEditDepartment;
+new Date(2025 - 11 - 20).toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric"
+});
